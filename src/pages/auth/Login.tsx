@@ -17,7 +17,7 @@ export default function Login() {
     <div className="min-h-screen flex flex-col items-center justify-center p-4" style={{ backgroundColor: '#0B1520' }}>
       {/* Logo */}
       <div className="mb-8 flex items-center gap-3">
-        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14">
           <defs>
             <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#F5A623"/>
@@ -40,7 +40,7 @@ export default function Login() {
           backgroundClip: 'text',
           letterSpacing: '0.2em',
           fontWeight: 800,
-          fontSize: '1.8rem'
+          fontSize: 'clamp(1.4rem, 4vw, 1.8rem)'
         }}>
           PLUGADO
         </h1>
@@ -48,7 +48,7 @@ export default function Login() {
 
       {/* Card */}
       <div 
-        className="w-full max-w-[420px] p-10"
+        className="w-full max-w-[420px] p-6 sm:p-8 md:p-10"
         style={{ 
           backgroundColor: '#0F1D2E',
           border: '1px solid rgba(255,255,255,0.07)',
@@ -76,7 +76,7 @@ export default function Login() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all"
+                className="w-full pl-10 pr-4 py-3 min-h-[48px] bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all"
                 placeholder="seu@email.com"
               />
             </div>
@@ -95,7 +95,7 @@ export default function Login() {
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-10 pr-12 py-3 bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all"
+                className="w-full pl-10 pr-12 py-3 min-h-[48px] bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all"
                 placeholder="••••••••"
               />
               <button
@@ -127,7 +127,7 @@ export default function Login() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-3 text-white font-semibold rounded-full transition-all hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:ring-offset-2 focus:ring-offset-[#0B1520]"
+            className="w-full py-3 min-h-[48px] text-white font-semibold rounded-full transition-all hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:ring-offset-2 focus:ring-offset-[#0B1520]"
             style={{ background: 'linear-gradient(135deg, #F5A623 0%, #E8951C 100%)' }}
           >
             Entrar
