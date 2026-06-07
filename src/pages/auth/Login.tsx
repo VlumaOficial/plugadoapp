@@ -17,7 +17,12 @@ export default function Login() {
     <div className="min-h-screen flex flex-col items-center justify-center p-4" style={{ backgroundColor: '#0B1520' }}>
       {/* Logo */}
       <div className="mb-8 flex items-center gap-3">
-        <img src="/logo-plugado.png" alt="Plugado" className="w-14 h-14" style={{mixBlendMode: 'normal'}}/>
+        <img 
+          src="/logo-plugado.png" 
+          alt="Plugado" 
+          className="w-14 h-14"
+          style={{ mixBlendMode: 'multiply' }}
+        />
         <h1 style={{ 
           fontFamily: 'Syne, sans-serif',
           background: 'linear-gradient(90deg, #F5A623, #2EBF72)',
