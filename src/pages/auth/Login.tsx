@@ -17,9 +17,7 @@ export default function Login() {
     <div className="min-h-screen flex flex-col items-center justify-center p-4" style={{ backgroundColor: '#0B1520' }}>
       {/* Logo */}
       <div className="mb-8 flex items-center gap-3">
-        <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #F5A623 0%, #2EBF72 100%)' }}>
-          <span className="text-white font-bold text-xl">P</span>
-        </div>
+        <img src="/logo-plugado.png" alt="Plugado" className="w-12 h-12 rounded-full object-cover"/>
         <h1 className="text-white font-bold tracking-widest text-3xl" style={{ fontFamily: 'Syne, sans-serif' }}>
           PLUGADO
         </h1>
@@ -121,6 +119,20 @@ export default function Login() {
           </Link>
         </p>
       </div>
+
+      {/* Footer */}
+      <a 
+        href="https://vluma.com.br" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="mt-6 flex items-center justify-center gap-1 text-gray-500 text-sm hover:text-gray-400 transition-colors"
+      >
+        Desenvolvido por{' '}
+        <img src="/logo-vluma.png" alt="VLUMA" className="w-6 h-6 rounded-full object-cover inline mx-1"/>
+        <span className="font-bold" style={{ fontFamily: 'Syne, sans-serif', background: 'linear-gradient(135deg, #F5A623 0%, #2EBF72 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+          VLUMA
+        </span>
+      </a>
     </div>
   )
 }
