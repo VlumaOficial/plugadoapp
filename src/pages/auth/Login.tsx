@@ -1,16 +1,41 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { supabase } from '../../integrations/supabase/client'
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
-    // TODO: Implement login logic
+    setLoading(true)
+
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
+
+      if (error) {
+        if (error.message === 'Invalid login credentials') {
+          setError('E-mail ou senha incorretos.')
+        } else {
+          setError('Erro ao entrar. Tente novamente.')
+        }
+        return
+      }
+
+      navigate('/dashboard')
+    } catch {
+      setError('Erro inesperado. Tente novamente.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -127,10 +152,11 @@ export default function Login() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-3 min-h-[48px] text-white font-semibold rounded-full transition-all hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:ring-offset-2 focus:ring-offset-[#0B1520]"
+            disabled={loading}
+            className="w-full py-3 min-h-[48px] text-white font-semibold rounded-full transition-all hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:ring-offset-2 focus:ring-offset-[#0B1520] disabled:opacity-50 disabled:cursor-not-allowed"
             style={{ background: 'linear-gradient(135deg, #F5A623 0%, #E8951C 100%)' }}
           >
-            Entrar
+            {loading ? 'Entrando...' : 'Entrar'}
           </button>
         </form>
 
