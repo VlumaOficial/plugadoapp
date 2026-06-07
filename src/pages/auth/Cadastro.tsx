@@ -191,7 +191,7 @@ export default function Cadastro() {
 
       {/* Card */}
       <div 
-        className="w-full max-w-[420px] p-6 sm:p-8 md:p-10 my-4"
+        className="w-full max-w-[480px] sm:max-w-[520px] md:max-w-[560px] p-6 sm:p-8 md:p-10 my-4"
         style={{ 
           backgroundColor: '#0F1D2E',
           border: '1px solid rgba(255,255,255,0.07)',
