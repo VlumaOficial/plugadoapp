@@ -157,7 +157,7 @@ export default function Cadastro() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4" style={{ backgroundColor: '#0B1520' }}>
+    <div className="min-h-screen flex flex-col items-center justify-start md:justify-center p-4 py-8" style={{ backgroundColor: '#0B1520' }}>
       {/* Logo */}
       <div className="mb-8 flex items-center gap-3">
         <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14">
@@ -191,7 +191,7 @@ export default function Cadastro() {
 
       {/* Card */}
       <div 
-        className="w-full max-w-[420px] p-6 sm:p-8 md:p-10 max-h-[85vh] overflow-y-auto"
+        className="w-full max-w-[420px] p-6 sm:p-8 md:p-10 my-4"
         style={{ 
           backgroundColor: '#0F1D2E',
           border: '1px solid rgba(255,255,255,0.07)',
