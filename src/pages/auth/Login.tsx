@@ -17,12 +17,21 @@ export default function Login() {
     <div className="min-h-screen flex flex-col items-center justify-center p-4" style={{ backgroundColor: '#0B1520' }}>
       {/* Logo */}
       <div className="mb-8 flex items-center gap-3">
-        <img 
-          src="/logo-plugado.png" 
-          alt="Plugado" 
-          className="w-14 h-14"
-          style={{ mixBlendMode: 'multiply' }}
-        />
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#F5A623"/>
+              <stop offset="50%" stopColor="#E8C840"/>
+              <stop offset="100%" stopColor="#2EBF72"/>
+            </linearGradient>
+          </defs>
+          <circle cx="28" cy="28" r="27" fill="url(#ringGrad)"/>
+          <circle cx="28" cy="28" r="23" fill="#0B1520"/>
+          <circle cx="18" cy="28" r="5" fill="white"/>
+          <circle cx="38" cy="28" r="5" fill="white"/>
+          <path d="M23 23 Q28 17 33 23" stroke="white" strokeWidth="3" strokeLinecap="round" fill="none"/>
+          <path d="M23 33 Q28 39 33 33" stroke="white" strokeWidth="3" strokeLinecap="round" fill="none"/>
+        </svg>
         <h1 style={{ 
           fontFamily: 'Syne, sans-serif',
           background: 'linear-gradient(90deg, #F5A623, #2EBF72)',
