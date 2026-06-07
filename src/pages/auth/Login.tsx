@@ -21,16 +21,16 @@ export default function Login() {
           <defs>
             <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#F5A623"/>
-              <stop offset="50%" stopColor="#E8C840"/>
+              <stop offset="55%" stopColor="#C8B830"/>
               <stop offset="100%" stopColor="#2EBF72"/>
             </linearGradient>
           </defs>
           <circle cx="28" cy="28" r="27" fill="url(#ringGrad)"/>
           <circle cx="28" cy="28" r="23" fill="#0B1520"/>
-          <circle cx="18" cy="28" r="5" fill="white"/>
-          <circle cx="38" cy="28" r="5" fill="white"/>
-          <path d="M23 23 Q28 17 33 23" stroke="white" strokeWidth="3" strokeLinecap="round" fill="none"/>
-          <path d="M23 33 Q28 39 33 33" stroke="white" strokeWidth="3" strokeLinecap="round" fill="none"/>
+          <circle cx="17" cy="29" r="5.5" fill="white"/>
+          <circle cx="39" cy="29" r="5.5" fill="white"/>
+          <path d="M22 23 Q28 15 34 23" stroke="white" strokeWidth="3.5" strokeLinecap="round" fill="none"/>
+          <path d="M22 35 Q28 43 34 35" stroke="white" strokeWidth="3.5" strokeLinecap="round" fill="none"/>
         </svg>
         <h1 style={{ 
           fontFamily: 'Syne, sans-serif',
