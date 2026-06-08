@@ -10,8 +10,7 @@ export default function Cadastro() {
   const [slugDisponivel, setSlugDisponivel] = useState<boolean | null>(null)
   const [slugValidando, setSlugValidando] = useState(false)
   const [showModal, setShowModal] = useState(false)
-  const [loading, setLoading] = useState(false)
-
+  
   const [form, setForm] = useState({
     nome: '', email: '', senha: '', confirmarSenha: '',
     nomeLoja: '', slug: '', segmento: '',
