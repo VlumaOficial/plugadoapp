@@ -133,27 +133,23 @@ export default function Cadastro() {
       const userId = authData.user?.id
       if (!userId) { setError('Erro ao criar usuário.'); return }
 
-      const { error: lojaError } = await supabase.from('lojas').insert({
-        user_id: userId,
-        nome_loja: form.nomeLoja,
-        slug: form.slug,
-        segmento: form.segmento,
-        tipo_documento: form.tipoDocumento,
-        numero_documento: form.numeroDocumento.replace(/\D/g, ''),
-        nome_responsavel: form.nomeResponsavel,
-        endereco: form.endereco,
-        email_lgpd: form.emailLgpd,
-        telefone: form.telefone.replace(/\D/g, '')
+      const { error: fnError } = await supabase.functions.invoke('criar-loja', {
+        body: {
+          user_id: userId,
+          nome_loja: form.nomeLoja,
+          slug: form.slug,
+          segmento: form.segmento,
+          tipo_documento: form.tipoDocumento,
+          numero_documento: form.numeroDocumento.replace(/\D/g, ''),
+          nome_responsavel: form.nomeResponsavel,
+          endereco: form.endereco,
+          email_lgpd: form.emailLgpd,
+          telefone: form.telefone.replace(/\D/g, '')
+        }
       })
-      if (lojaError) { setError('Erro ao salvar dados da loja.'); return }
+      if (fnError) { setError('Erro ao salvar dados da loja.'); return }
 
-      await supabase.from('aceites_termos').insert({
-        user_id: userId,
-        versao_termos: '1.0',
-        versao_politica: '1.0'
-      })
-
-      window.location.href = '/dashboard'
+      window.location.href = '/cadastro-confirmacao'
     } catch { setError('Erro inesperado. Tente novamente.') }
   }
 
