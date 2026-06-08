@@ -51,7 +51,7 @@ export default function Login() {
         />
         
         {/* Content */}
-        <div className="relative z-10 text-center max-w-md">
+        <div className="relative z-10 text-center max-w-md px-4">
           {/* Large Logo */}
           <div className="mb-8 flex justify-center">
             <svg width="120" height="120" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -77,7 +77,7 @@ export default function Login() {
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
-            letterSpacing: '0.2em',
+            letterSpacing: '0.15em',
             fontWeight: 800,
             fontSize: '3rem',
             marginBottom: '1.5rem'

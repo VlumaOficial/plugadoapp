@@ -169,7 +169,7 @@ export default function Cadastro() {
         />
         
         {/* Content */}
-        <div className="relative z-10 text-center max-w-md">
+        <div className="relative z-10 text-center max-w-md px-4">
           {/* Large Logo */}
           <div className="mb-8 flex justify-center">
             <svg width="120" height="120" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -195,7 +195,7 @@ export default function Cadastro() {
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
-            letterSpacing: '0.2em',
+            letterSpacing: '0.15em',
             fontWeight: 800,
             fontSize: '3rem',
             marginBottom: '1.5rem'
@@ -513,89 +513,98 @@ export default function Cadastro() {
         {/* Step 3: Legal Data */}
         {step === 3 && (
           <div className="space-y-5">
-            <div>
-              <label className="block text-gray-300 text-sm mb-2">Tipo de documento</label>
-              <div className="flex gap-4">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="radio"
-                    value="cpf"
-                    checked={form.tipoDocumento === 'cpf'}
-                    onChange={(e) => handleInputChange('tipoDocumento', e.target.value)}
-                    className="w-4 h-4 accent-[#F5A623]"
-                  />
-                  <span className="text-gray-300">CPF</span>
+            {/* Row 1: Document Type + Document Number */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-gray-300 text-sm mb-2">Tipo de documento</label>
+                <div className="flex gap-4">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      value="cpf"
+                      checked={form.tipoDocumento === 'cpf'}
+                      onChange={(e) => handleInputChange('tipoDocumento', e.target.value)}
+                      className="w-4 h-4 accent-[#F5A623]"
+                    />
+                    <span className="text-gray-300">CPF</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      value="cnpj"
+                      checked={form.tipoDocumento === 'cnpj'}
+                      onChange={(e) => handleInputChange('tipoDocumento', e.target.value)}
+                      className="w-4 h-4 accent-[#F5A623]"
+                    />
+                    <span className="text-gray-300">CNPJ</span>
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-gray-300 text-sm mb-2">
+                  {form.tipoDocumento === 'cpf' ? 'CPF' : 'CNPJ'} *
                 </label>
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="radio"
-                    value="cnpj"
-                    checked={form.tipoDocumento === 'cnpj'}
-                    onChange={(e) => handleInputChange('tipoDocumento', e.target.value)}
-                    className="w-4 h-4 accent-[#F5A623]"
-                  />
-                  <span className="text-gray-300">CNPJ</span>
-                </label>
+                <input
+                  type="text"
+                  value={form.numeroDocumento}
+                  onChange={(e) => handleInputChange('numeroDocumento', e.target.value)}
+                  className="w-full px-4 py-3 min-h-[48px] bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all"
+                  placeholder={form.tipoDocumento === 'cpf' ? '000.000.000-00' : '00.000.000/0000-00'}
+                />
               </div>
             </div>
 
-            <div>
-              <label className="block text-gray-300 text-sm mb-2">
-                {form.tipoDocumento === 'cpf' ? 'CPF' : 'CNPJ'} *
-              </label>
-              <input
-                type="text"
-                value={form.numeroDocumento}
-                onChange={(e) => handleInputChange('numeroDocumento', e.target.value)}
-                className="w-full px-4 py-3 min-h-[48px] bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all"
-                placeholder={form.tipoDocumento === 'cpf' ? '000.000.000-00' : '00.000.000/0000-00'}
-              />
+            {/* Row 2: Responsible Name + Address */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-gray-300 text-sm mb-2">
+                  {form.tipoDocumento === 'cpf' ? 'Nome completo' : 'Razão Social'} *
+                </label>
+                <input
+                  type="text"
+                  value={form.nomeResponsavel}
+                  onChange={(e) => handleInputChange('nomeResponsavel', e.target.value)}
+                  className="w-full px-4 py-3 min-h-[48px] bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all"
+                  placeholder={form.tipoDocumento === 'cpf' ? 'Seu nome completo' : 'Razão Social da empresa'}
+                />
+              </div>
+
+              <div>
+                <label className="block text-gray-300 text-sm mb-2">Endereço</label>
+                <input
+                  type="text"
+                  value={form.endereco}
+                  onChange={(e) => handleInputChange('endereco', e.target.value)}
+                  className="w-full px-4 py-3 min-h-[48px] bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all"
+                  placeholder="Rua, número, bairro, cidade"
+                />
+              </div>
             </div>
 
-            <div>
-              <label className="block text-gray-300 text-sm mb-2">
-                {form.tipoDocumento === 'cpf' ? 'Nome completo' : 'Razão Social'} *
-              </label>
-              <input
-                type="text"
-                value={form.nomeResponsavel}
-                onChange={(e) => handleInputChange('nomeResponsavel', e.target.value)}
-                className="w-full px-4 py-3 min-h-[48px] bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all"
-                placeholder={form.tipoDocumento === 'cpf' ? 'Seu nome completo' : 'Razão Social da empresa'}
-              />
-            </div>
+            {/* Row 3: LGPD Email + Phone */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-gray-300 text-sm mb-2">E-mail LGPD</label>
+                <input
+                  type="email"
+                  value={form.emailLgpd}
+                  onChange={(e) => handleInputChange('emailLgpd', e.target.value)}
+                  className="w-full px-4 py-3 min-h-[48px] bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all"
+                  placeholder="lgpd@empresa.com"
+                />
+              </div>
 
-            <div>
-              <label className="block text-gray-300 text-sm mb-2">Endereço</label>
-              <input
-                type="text"
-                value={form.endereco}
-                onChange={(e) => handleInputChange('endereco', e.target.value)}
-                className="w-full px-4 py-3 min-h-[48px] bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all"
-                placeholder="Rua, número, bairro, cidade"
-              />
-            </div>
-
-            <div>
-              <label className="block text-gray-300 text-sm mb-2">E-mail LGPD</label>
-              <input
-                type="email"
-                value={form.emailLgpd}
-                onChange={(e) => handleInputChange('emailLgpd', e.target.value)}
-                className="w-full px-4 py-3 min-h-[48px] bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all"
-                placeholder="lgpd@empresa.com"
-              />
-            </div>
-
-            <div>
-              <label className="block text-gray-300 text-sm mb-2">Telefone</label>
-              <input
-                type="text"
-                value={form.telefone}
-                onChange={(e) => handleInputChange('telefone', e.target.value)}
-                className="w-full px-4 py-3 min-h-[48px] bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all"
-                placeholder="(00) 00000-0000"
-              />
+              <div>
+                <label className="block text-gray-300 text-sm mb-2">Telefone</label>
+                <input
+                  type="text"
+                  value={form.telefone}
+                  onChange={(e) => handleInputChange('telefone', e.target.value)}
+                  className="w-full px-4 py-3 min-h-[48px] bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all"
+                  placeholder="(00) 00000-0000"
+                />
+              </div>
             </div>
 
             <div className="flex gap-3">
