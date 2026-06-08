@@ -103,7 +103,8 @@ export default function Cadastro() {
     if (!form.numeroDocumento || !form.nomeResponsavel) { setError('Documento e nome são obrigatórios.'); return false }
     if (form.tipoDocumento === 'cpf' && !isCPFValido(form.numeroDocumento)) { setError('CPF inválido.'); return false }
     if (form.tipoDocumento === 'cnpj' && !isCNPJValido(form.numeroDocumento)) { setError('CNPJ inválido.'); return false }
-    if (form.emailLgpd && !isEmailValido(form.emailLgpd)) { setError('E-mail LGPD inválido.'); return false }
+    if (!form.emailLgpd) { setError('E-mail de contato é obrigatório.'); return false }
+  if (!isEmailValido(form.emailLgpd)) { setError('E-mail de contato inválido.'); return false }
     if (form.telefone && form.telefone.replace(/\D/g,'').length < 10) { setError('Telefone inválido.'); return false }
     setError(''); return true
   }
@@ -331,8 +332,8 @@ export default function Cadastro() {
                 <input type="text" value={form.endereco} onChange={e => handleInputChange('endereco', e.target.value)} className={ic} placeholder="Rua, número, bairro, cidade"/>
               </div>
               <div>
-                <label className={lc}>E-mail LGPD</label>
-                <input type="email" value={form.emailLgpd} onChange={e => handleInputChange('emailLgpd', e.target.value)} className={ic} placeholder="lgpd@empresa.com"/>
+                <label className={lc}>E-mail de contato *</label>
+                <input type="email" value={form.emailLgpd} onChange={e => handleInputChange('emailLgpd', e.target.value)} className={ic} placeholder="contato@empresa.com"/>
               </div>
               <div>
                 <label className={lc}>Telefone</label>
