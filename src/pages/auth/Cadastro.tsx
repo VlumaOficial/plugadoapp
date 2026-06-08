@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import { supabase } from '../../integrations/supabase/client'
 
 export default function Cadastro() {
@@ -19,11 +18,9 @@ export default function Cadastro() {
 
   useEffect(() => {
     if (form.nomeLoja) {
-      const slug = form.nomeLoja
-        .toLowerCase().normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/[^a-z0-9\s-]/g, '').trim()
-        .replace(/\s+/g, '-').replace(/-+/g, '-')
+      const slug = form.nomeLoja.toLowerCase().normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9\s-]/g, '')
+        .trim().replace(/\s+/g, '-').replace(/-+/g, '-')
       setForm(prev => ({ ...prev, slug }))
     }
   }, [form.nomeLoja])
@@ -53,8 +50,11 @@ export default function Cadastro() {
     setForm(prev => ({ ...prev, [field]: v }))
   }
 
+  const isEmailValido = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+
   const validateStep1 = () => {
     if (!form.nome || !form.email || !form.senha || !form.confirmarSenha) { setError('Todos os campos são obrigatórios.'); return false }
+    if (!isEmailValido(form.email)) { setError('E-mail inválido.'); return false }
     if (form.senha.length < 8) { setError('A senha deve ter no mínimo 8 caracteres.'); return false }
     if (form.senha !== form.confirmarSenha) { setError('As senhas não coincidem.'); return false }
     setError(''); return true
@@ -67,13 +67,27 @@ export default function Cadastro() {
     setError(''); return true
   }
 
+  const validateStep3 = () => {
+    if (!form.numeroDocumento || !form.nomeResponsavel) { setError('Documento e nome são obrigatórios.'); return false }
+    if (form.tipoDocumento === 'cpf' && form.numeroDocumento.replace(/\D/g,'').length !== 11) { setError('CPF inválido.'); return false }
+    if (form.tipoDocumento === 'cnpj' && form.numeroDocumento.replace(/\D/g,'').length !== 14) { setError('CNPJ inválido.'); return false }
+    if (form.emailLgpd && !isEmailValido(form.emailLgpd)) { setError('E-mail LGPD inválido.'); return false }
+    if (form.telefone && form.telefone.replace(/\D/g,'').length < 10) { setError('Telefone inválido.'); return false }
+    setError(''); return true
+  }
+
   const handleNext = () => {
     if (step === 1 && validateStep1()) setStep(2)
     else if (step === 2 && validateStep2()) setStep(3)
   }
 
   const handleBack = () => { if (step > 1) { setStep(step - 1); setError('') } }
-  const handleCreateAccount = () => { console.log('Abrir ModalTermos') }
+
+  const handleCreateAccount = () => {
+    if (validateStep3()) {
+      console.log('Abrir ModalTermos')
+    }
+  }
 
   const Logo = ({ size = 56 }: { size?: number }) => (
     <svg width={size} height={size} viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -93,12 +107,12 @@ export default function Cadastro() {
     </svg>
   )
 
-  const inputClass = "w-full px-3 py-2 bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all text-sm"
-  const labelClass = "block text-gray-300 text-xs mb-1"
+  const ic = "w-full px-3 py-2 bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all text-sm"
+  const lc = "block text-gray-300 text-xs mb-1"
 
   return (
     <div className="min-h-screen flex" style={{ backgroundColor: '#0B1520' }}>
-      {/* Painel Esquerdo - apenas desktop */}
+      {/* Painel Esquerdo */}
       <div className="hidden lg:flex lg:w-5/12 flex-col items-center justify-center px-10" style={{ background: 'linear-gradient(135deg, #0B1520 0%, #0F1D2E 100%)' }}>
         <div className="text-center max-w-xs">
           <div className="mb-4 flex justify-center"><Logo size={72}/></div>
@@ -106,9 +120,9 @@ export default function Cadastro() {
           <p className="text-gray-400 text-sm mb-6">Seu negócio sempre ligado</p>
           <div className="space-y-3 text-left">
             {[
-              { icon: 'M5 13l4 4L19 7', color: '#F5A623', title: 'Gestão completa', desc: 'Pedidos e clientes em um só lugar' },
-              { icon: 'M13 10V3L4 14h7v7l9-11h-7z', color: '#2EBF72', title: 'Vendas rápidas', desc: 'Checkout para converter mais' },
-              { icon: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z', color: '#C8B830', title: 'Relatórios', desc: 'Tome decisões com dados reais' }
+              { icon:'M5 13l4 4L19 7', color:'#F5A623', title:'Gestão completa', desc:'Pedidos e clientes em um só lugar' },
+              { icon:'M13 10V3L4 14h7v7l9-11h-7z', color:'#2EBF72', title:'Vendas rápidas', desc:'Checkout para converter mais' },
+              { icon:'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z', color:'#C8B830', title:'Relatórios', desc:'Tome decisões com dados reais' }
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-3">
                 <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: item.color + '25' }}>
@@ -126,7 +140,7 @@ export default function Cadastro() {
         </div>
       </div>
 
-      {/* Painel Direito - Formulário */}
+      {/* Painel Direito */}
       <div className="w-full lg:w-7/12 flex flex-col items-center justify-center min-h-screen px-6 py-8" style={{ backgroundColor: '#0B1520' }}>
         {/* Logo mobile */}
         <div className="flex lg:hidden mb-5 items-center gap-3">
@@ -156,26 +170,26 @@ export default function Cadastro() {
           {step === 1 && (
             <div className="grid grid-cols-2 gap-3">
               <div className="col-span-2">
-                <label className={labelClass}>Nome completo *</label>
-                <input type="text" value={form.nome} onChange={e => handleInputChange('nome', e.target.value)} className={inputClass} placeholder="Seu nome completo"/>
+                <label className={lc}>Nome completo *</label>
+                <input type="text" value={form.nome} onChange={e => handleInputChange('nome', e.target.value)} className={ic} placeholder="Seu nome completo"/>
               </div>
               <div className="col-span-2">
-                <label className={labelClass}>E-mail *</label>
-                <input type="email" value={form.email} onChange={e => handleInputChange('email', e.target.value)} className={inputClass} placeholder="seu@email.com"/>
+                <label className={lc}>E-mail *</label>
+                <input type="email" value={form.email} onChange={e => handleInputChange('email', e.target.value)} className={ic} placeholder="seu@email.com"/>
               </div>
               <div>
-                <label className={labelClass}>Senha *</label>
+                <label className={lc}>Senha *</label>
                 <div className="relative">
-                  <input type={showPassword ? 'text' : 'password'} value={form.senha} onChange={e => handleInputChange('senha', e.target.value)} className={inputClass + ' pr-10'} placeholder="mín. 8 caracteres"/>
+                  <input type={showPassword ? 'text' : 'password'} value={form.senha} onChange={e => handleInputChange('senha', e.target.value)} className={ic + ' pr-10'} placeholder="mín. 8 caracteres"/>
                   <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400">
                     <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={showPassword ? 'M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21' : 'M15 12a3 3 0 11-6 0 3 3 0 016 0zM2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'}/></svg>
                   </button>
                 </div>
               </div>
               <div>
-                <label className={labelClass}>Confirmar senha *</label>
+                <label className={lc}>Confirmar senha *</label>
                 <div className="relative">
-                  <input type={showConfirmPassword ? 'text' : 'password'} value={form.confirmarSenha} onChange={e => handleInputChange('confirmarSenha', e.target.value)} className={inputClass + ' pr-10'} placeholder="••••••••"/>
+                  <input type={showConfirmPassword ? 'text' : 'password'} value={form.confirmarSenha} onChange={e => handleInputChange('confirmarSenha', e.target.value)} className={ic + ' pr-10'} placeholder="••••••••"/>
                   <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400">
                     <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={showConfirmPassword ? 'M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21' : 'M15 12a3 3 0 11-6 0 3 3 0 016 0zM2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'}/></svg>
                   </button>
@@ -191,13 +205,13 @@ export default function Cadastro() {
           {step === 2 && (
             <div className="grid grid-cols-2 gap-3">
               <div className="col-span-2">
-                <label className={labelClass}>Nome da loja *</label>
-                <input type="text" value={form.nomeLoja} onChange={e => handleInputChange('nomeLoja', e.target.value)} className={inputClass} placeholder="Minha Loja"/>
+                <label className={lc}>Nome da loja *</label>
+                <input type="text" value={form.nomeLoja} onChange={e => handleInputChange('nomeLoja', e.target.value)} className={ic} placeholder="Minha Loja"/>
               </div>
               <div>
-                <label className={labelClass}>Slug *</label>
+                <label className={lc}>Slug *</label>
                 <div className="relative">
-                  <input type="text" value={form.slug} onChange={e => handleInputChange('slug', e.target.value)} className={inputClass + ' pr-8'} placeholder="minha-loja"/>
+                  <input type="text" value={form.slug} onChange={e => handleInputChange('slug', e.target.value)} className={ic + ' pr-8'} placeholder="minha-loja"/>
                   {slugValidando && <div className="absolute inset-y-0 right-0 pr-2 flex items-center"><div className="w-4 h-4 border-2 border-gray-500 border-t-[#F5A623] rounded-full animate-spin"/></div>}
                   {!slugValidando && slugDisponivel === true && <div className="absolute inset-y-0 right-0 pr-2 flex items-center"><svg className="h-4 w-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"/></svg></div>}
                   {!slugValidando && slugDisponivel === false && <div className="absolute inset-y-0 right-0 pr-2 flex items-center"><svg className="h-4 w-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/></svg></div>}
@@ -205,8 +219,8 @@ export default function Cadastro() {
                 {form.slug && <p className="text-gray-500 text-xs mt-1">plugadoapp.com.br/{form.slug}</p>}
               </div>
               <div>
-                <label className={labelClass}>Segmento *</label>
-                <select value={form.segmento} onChange={e => handleInputChange('segmento', e.target.value)} className={inputClass}>
+                <label className={lc}>Segmento *</label>
+                <select value={form.segmento} onChange={e => handleInputChange('segmento', e.target.value)} className={ic}>
                   <option value="">Selecione...</option>
                   <option value="alimentacao">Alimentação</option>
                   <option value="moda">Moda</option>
@@ -227,7 +241,7 @@ export default function Cadastro() {
           {step === 3 && (
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className={labelClass}>Tipo de documento</label>
+                <label className={lc}>Tipo de documento</label>
                 <div className="flex gap-3 mt-1">
                   {['cpf','cnpj'].map(t => (
                     <label key={t} className="flex items-center gap-1.5 cursor-pointer">
@@ -238,37 +252,30 @@ export default function Cadastro() {
                 </div>
               </div>
               <div>
-                <label className={labelClass}>{form.tipoDocumento === 'cpf' ? 'CPF' : 'CNPJ'} *</label>
-                <input type="text" value={form.numeroDocumento} onChange={e => handleInputChange('numeroDocumento', e.target.value)} className={inputClass} placeholder={form.tipoDocumento === 'cpf' ? '000.000.000-00' : '00.000.000/0000-00'}/>
+                <label className={lc}>{form.tipoDocumento === 'cpf' ? 'CPF' : 'CNPJ'} *</label>
+                <input type="text" value={form.numeroDocumento} onChange={e => handleInputChange('numeroDocumento', e.target.value)} className={ic} placeholder={form.tipoDocumento === 'cpf' ? '000.000.000-00' : '00.000.000/0000-00'}/>
               </div>
               <div className="col-span-2">
-                <label className={labelClass}>{form.tipoDocumento === 'cpf' ? 'Nome completo' : 'Razão Social'} *</label>
-                <input type="text" value={form.nomeResponsavel} onChange={e => handleInputChange('nomeResponsavel', e.target.value)} className={inputClass} placeholder={form.tipoDocumento === 'cpf' ? 'Seu nome completo' : 'Razão Social'}/>
+                <label className={lc}>{form.tipoDocumento === 'cpf' ? 'Nome completo' : 'Razão Social'} *</label>
+                <input type="text" value={form.nomeResponsavel} onChange={e => handleInputChange('nomeResponsavel', e.target.value)} className={ic} placeholder={form.tipoDocumento === 'cpf' ? 'Seu nome completo' : 'Razão Social'}/>
               </div>
               <div className="col-span-2">
-                <label className={labelClass}>Endereço</label>
-                <input type="text" value={form.endereco} onChange={e => handleInputChange('endereco', e.target.value)} className={inputClass} placeholder="Rua, número, bairro, cidade"/>
+                <label className={lc}>Endereço</label>
+                <input type="text" value={form.endereco} onChange={e => handleInputChange('endereco', e.target.value)} className={ic} placeholder="Rua, número, bairro, cidade"/>
               </div>
               <div>
-                <label className={labelClass}>E-mail LGPD</label>
-                <input type="email" value={form.emailLgpd} onChange={e => handleInputChange('emailLgpd', e.target.value)} className={inputClass} placeholder="lgpd@empresa.com"/>
+                <label className={lc}>E-mail LGPD</label>
+                <input type="email" value={form.emailLgpd} onChange={e => handleInputChange('emailLgpd', e.target.value)} className={ic} placeholder="lgpd@empresa.com"/>
               </div>
               <div>
-                <label className={labelClass}>Telefone</label>
-                <input type="text" value={form.telefone} onChange={e => handleInputChange('telefone', e.target.value)} className={inputClass} placeholder="(00) 00000-0000"/>
+                <label className={lc}>Telefone</label>
+                <input type="text" value={form.telefone} onChange={e => handleInputChange('telefone', e.target.value)} className={ic} placeholder="(00) 00000-0000"/>
               </div>
               <div className="col-span-2 flex gap-3">
                 <button type="button" onClick={handleBack} className="flex-1 py-2.5 text-white font-semibold rounded-full text-sm hover:opacity-90 transition-all" style={{ background:'linear-gradient(135deg,#374151,#1F2937)' }}>← Voltar</button>
                 <button type="button" onClick={handleCreateAccount} className="flex-1 py-2.5 text-white font-semibold rounded-full text-sm hover:opacity-90 transition-all" style={{ background:'linear-gradient(135deg,#F5A623,#E8951C)' }}>Criar conta</button>
               </div>
             </div>
-          )}
-
-          {step < 3 && (
-            <p className="text-center text-gray-400 text-xs mt-4">
-              Já tem conta?{' '}
-              <Link to="/login" className="text-[#F5A623] hover:text-[#E8951C] font-medium transition-colors">Entre</Link>
-            </p>
           )}
         </div>
 
