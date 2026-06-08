@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../integrations/supabase/client'
+import ModalTermos from '../../components/auth/ModalTermos'
 
 export default function Cadastro() {
   const [step, setStep] = useState(1)
@@ -8,6 +9,8 @@ export default function Cadastro() {
   const [error, setError] = useState('')
   const [slugDisponivel, setSlugDisponivel] = useState<boolean | null>(null)
   const [slugValidando, setSlugValidando] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const [form, setForm] = useState({
     nome: '', email: '', senha: '', confirmarSenha: '',
@@ -84,9 +87,45 @@ export default function Cadastro() {
   const handleBack = () => { if (step > 1) { setStep(step - 1); setError('') } }
 
   const handleCreateAccount = () => {
-    if (validateStep3()) {
-      console.log('Abrir ModalTermos')
-    }
+    if (validateStep3()) setShowModal(true)
+  }
+
+  const handleAceitar = async () => {
+    setShowModal(false)
+    setLoading(true)
+    try {
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email: form.email,
+        password: form.senha,
+        options: { data: { nome: form.nome } }
+      })
+      if (authError) { setError(authError.message); setLoading(false); return }
+
+      const userId = authData.user?.id
+      if (!userId) { setError('Erro ao criar usuário.'); setLoading(false); return }
+
+      const { error: lojaError } = await supabase.from('lojas').insert({
+        user_id: userId,
+        nome_loja: form.nomeLoja,
+        slug: form.slug,
+        segmento: form.segmento,
+        tipo_documento: form.tipoDocumento,
+        numero_documento: form.numeroDocumento.replace(/\D/g, ''),
+        nome_responsavel: form.nomeResponsavel,
+        endereco: form.endereco,
+        email_lgpd: form.emailLgpd,
+        telefone: form.telefone.replace(/\D/g, '')
+      })
+      if (lojaError) { setError('Erro ao salvar dados da loja.'); setLoading(false); return }
+
+      await supabase.from('aceites_termos').insert({
+        user_id: userId,
+        versao_termos: '1.0',
+        versao_politica: '1.0'
+      })
+
+      window.location.href = '/dashboard'
+    } catch { setError('Erro inesperado. Tente novamente.'); setLoading(false) }
   }
 
   const Logo = ({ size = 56 }: { size?: number }) => (
@@ -279,7 +318,9 @@ export default function Cadastro() {
           )}
         </div>
 
-        {/* Rodapé VLUMA */}
+        {showModal && <ModalTermos onAceitar={handleAceitar} onFechar={() => setShowModal(false)}/>}
+
+      {/* Rodapé VLUMA */}
         <a href="https://vluma.com.br" target="_blank" rel="noopener noreferrer" className="mt-4 flex items-center justify-center gap-1 text-gray-500 text-xs hover:text-gray-400 transition-colors">
           Desenvolvido por
           <img src="/logo-vluma.png" alt="VLUMA" className="w-5 h-5 rounded-full object-cover mx-1"/>
