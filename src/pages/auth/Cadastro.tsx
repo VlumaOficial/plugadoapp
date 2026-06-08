@@ -157,47 +157,138 @@ export default function Cadastro() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start md:justify-center p-4 py-8" style={{ backgroundColor: '#0B1520' }}>
-      {/* Logo */}
-      <div className="mb-8 flex items-center gap-3">
-        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14">
-          <defs>
-            <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#F5A623"/>
-              <stop offset="55%" stopColor="#C8B830"/>
-              <stop offset="100%" stopColor="#2EBF72"/>
-            </linearGradient>
-          </defs>
-          <circle cx="28" cy="28" r="27" fill="url(#ringGrad)"/>
-          <circle cx="28" cy="28" r="23" fill="#0B1520"/>
-          <circle cx="17" cy="29" r="5.5" fill="white"/>
-          <circle cx="39" cy="29" r="5.5" fill="white"/>
-          <path d="M22 23 Q28 15 34 23" stroke="white" strokeWidth="3.5" strokeLinecap="round" fill="none"/>
-          <path d="M22 35 Q28 43 34 35" stroke="white" strokeWidth="3.5" strokeLinecap="round" fill="none"/>
-        </svg>
-        <h1 style={{ 
-          fontFamily: 'Syne, sans-serif',
-          background: 'linear-gradient(90deg, #F5A623, #2EBF72)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          backgroundClip: 'text',
-          letterSpacing: '0.2em',
-          fontWeight: 800,
-          fontSize: 'clamp(1.4rem, 4vw, 1.8rem)'
-        }}>
-          PLUGADO
-        </h1>
+    <div className="min-h-screen flex flex-col lg:flex-row" style={{ backgroundColor: '#0B1520' }}>
+      {/* Left Side - Branding (Desktop only) */}
+      <div className="hidden lg:flex lg:w-1/2 flex-col justify-center items-center p-12 relative overflow-hidden">
+        {/* Background gradient */}
+        <div 
+          className="absolute inset-0 opacity-20"
+          style={{
+            background: 'radial-gradient(circle at 30% 50%, rgba(245, 166, 35, 0.3) 0%, transparent 50%), radial-gradient(circle at 70% 50%, rgba(46, 191, 114, 0.3) 0%, transparent 50%)'
+          }}
+        />
+        
+        {/* Content */}
+        <div className="relative z-10 text-center max-w-md">
+          {/* Large Logo */}
+          <div className="mb-8 flex justify-center">
+            <svg width="120" height="120" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="ringGradLarge" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#F5A623"/>
+                  <stop offset="55%" stopColor="#C8B830"/>
+                  <stop offset="100%" stopColor="#2EBF72"/>
+                </linearGradient>
+              </defs>
+              <circle cx="28" cy="28" r="27" fill="url(#ringGradLarge)"/>
+              <circle cx="28" cy="28" r="23" fill="#0B1520"/>
+              <circle cx="17" cy="29" r="5.5" fill="white"/>
+              <circle cx="39" cy="29" r="5.5" fill="white"/>
+              <path d="M22 23 Q28 15 34 23" stroke="white" strokeWidth="3.5" strokeLinecap="round" fill="none"/>
+              <path d="M22 35 Q28 43 34 35" stroke="white" strokeWidth="3.5" strokeLinecap="round" fill="none"/>
+            </svg>
+          </div>
+
+          <h1 style={{ 
+            fontFamily: 'Syne, sans-serif',
+            background: 'linear-gradient(90deg, #F5A623, #2EBF72)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+            letterSpacing: '0.2em',
+            fontWeight: 800,
+            fontSize: '3rem',
+            marginBottom: '1.5rem'
+          }}>
+            PLUGADO
+          </h1>
+
+          <p className="text-gray-300 text-lg mb-6" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+            Transforme a forma como você vende online
+          </p>
+
+          <div className="space-y-4 text-left">
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 rounded-full bg-[#F5A623]/20 flex items-center justify-center flex-shrink-0 mt-1">
+                <svg className="w-4 h-4 text-[#F5A623]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-white font-semibold mb-1" style={{ fontFamily: 'Syne, sans-serif' }}>Gestão completa</h3>
+                <p className="text-gray-400 text-sm" style={{ fontFamily: 'DM Sans, sans-serif' }}>Controle estoque, pedidos e clientes em um só lugar</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 rounded-full bg-[#2EBF72]/20 flex items-center justify-center flex-shrink-0 mt-1">
+                <svg className="w-4 h-4 text-[#2EBF72]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-white font-semibold mb-1" style={{ fontFamily: 'Syne, sans-serif' }}>Vendas rápidas</h3>
+                <p className="text-gray-400 text-sm" style={{ fontFamily: 'DM Sans, sans-serif' }}>Checkout otimizado para converter mais visitantes</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 rounded-full bg-[#C8B830]/20 flex items-center justify-center flex-shrink-0 mt-1">
+                <svg className="w-4 h-4 text-[#C8B830]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-white font-semibold mb-1" style={{ fontFamily: 'Syne, sans-serif' }}>Relatórios detalhados</h3>
+                <p className="text-gray-400 text-sm" style={{ fontFamily: 'DM Sans, sans-serif' }}>Analise seu desempenho e tome decisões inteligentes</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Card */}
-      <div 
-        className="w-full max-w-[480px] sm:max-w-[520px] md:max-w-[560px] p-6 sm:p-8 md:p-10 my-4"
-        style={{ 
-          backgroundColor: '#0F1D2E',
-          border: '1px solid rgba(255,255,255,0.07)',
-          borderRadius: '16px'
-        }}
-      >
+      {/* Right Side - Form */}
+      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-4 py-8 lg:p-12">
+        {/* Mobile Logo */}
+        <div className="lg:hidden mb-6 flex items-center gap-3">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 sm:w-12 sm:h-12">
+            <defs>
+              <linearGradient id="ringGradMobile" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#F5A623"/>
+                <stop offset="55%" stopColor="#C8B830"/>
+                <stop offset="100%" stopColor="#2EBF72"/>
+              </linearGradient>
+            </defs>
+            <circle cx="28" cy="28" r="27" fill="url(#ringGradMobile)"/>
+            <circle cx="28" cy="28" r="23" fill="#0B1520"/>
+            <circle cx="17" cy="29" r="5.5" fill="white"/>
+            <circle cx="39" cy="29" r="5.5" fill="white"/>
+            <path d="M22 23 Q28 15 34 23" stroke="white" strokeWidth="3.5" strokeLinecap="round" fill="none"/>
+            <path d="M22 35 Q28 43 34 35" stroke="white" strokeWidth="3.5" strokeLinecap="round" fill="none"/>
+          </svg>
+          <h1 style={{ 
+            fontFamily: 'Syne, sans-serif',
+            background: 'linear-gradient(90deg, #F5A623, #2EBF72)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+            letterSpacing: '0.2em',
+            fontWeight: 800,
+            fontSize: 'clamp(1.4rem, 4vw, 1.8rem)'
+          }}>
+            PLUGADO
+          </h1>
+        </div>
+
+        {/* Card */}
+        <div 
+          className="w-full max-w-[480px] sm:max-w-[520px] lg:max-w-[560px] p-6 sm:p-8 md:p-10 my-4"
+          style={{ 
+            backgroundColor: '#0F1D2E',
+            border: '1px solid rgba(255,255,255,0.07)',
+            borderRadius: '16px'
+          }}
+        >
         <h2 className="text-white text-2xl font-bold mb-2" style={{ fontFamily: 'Syne, sans-serif' }}>
           Criar conta
         </h2>
@@ -535,21 +626,22 @@ export default function Cadastro() {
             Entre
           </Link>
         </p>
-      </div>
+        </div>
 
-      {/* Footer */}
-      <a 
-        href="https://vluma.com.br" 
-        target="_blank" 
-        rel="noopener noreferrer"
-        className="mt-6 flex items-center justify-center gap-1 text-gray-500 text-sm hover:text-gray-400 transition-colors"
-      >
-        Desenvolvido por{' '}
-        <img src="/logo-vluma.png" alt="VLUMA" className="w-6 h-6 rounded-full object-cover inline mx-1"/>
-        <span className="font-bold" style={{ fontFamily: 'Syne, sans-serif', background: 'linear-gradient(135deg, #F5A623 0%, #2EBF72 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-          VLUMA
-        </span>
-      </a>
+        {/* Footer */}
+        <a 
+          href="https://vluma.com.br" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="mt-6 flex items-center justify-center gap-1 text-gray-500 text-sm hover:text-gray-400 transition-colors"
+        >
+          Desenvolvido por{' '}
+          <img src="/logo-vluma.png" alt="VLUMA" className="w-6 h-6 rounded-full object-cover inline mx-1"/>
+          <span className="font-bold" style={{ fontFamily: 'Syne, sans-serif', background: 'linear-gradient(135deg, #F5A623 0%, #2EBF72 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+            VLUMA
+          </span>
+        </a>
+      </div>
     </div>
   )
 }
