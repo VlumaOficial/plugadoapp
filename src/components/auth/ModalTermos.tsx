@@ -7,7 +7,7 @@ interface ModalTermosProps {
 
 const TERMOS_USO = `Termos de Uso e Serviço da VLUMA
 
-Seja Bem-Vindo ao Plugado (plugadoapp.com.br), plataforma operada por Sérgio Roberto Ferreira Dórea, inscrita no CNPJ 33.242.353/0001-57, com sede na R. Americano da Costa, 72, Machado, Salvador/BA, CEP 40.455-070.
+Seja Bem-Vindo ao Plugado (plugadoapp.com.br), plataforma operada por Simone Queiroz Dórea, inscrita no CNPJ 33.242.353/0001-57, com sede na R. Americano da Costa, 72, Machado, Salvador/BA, CEP 40.455-070.
 
 Antes de explorar tudo o que temos a oferecer, é importante que você entenda e concorde com algumas regras básicas que regem o uso do nosso site plugadoapp.com.br e qualquer outro serviço digital que oferecemos.
 
@@ -51,7 +51,7 @@ Dúvidas ou Comentários? Entre em contato através do e-mail lgpd@plugadoapp.co
 
 const POLITICA_PRIVACIDADE = `Política de Privacidade da VLUMA
 
-Bem-vindo à VLUMA, operada por Sérgio Roberto Ferreira Dórea, inscrita no CNPJ 33.242.353/0001-57, com sede na R. Americano da Costa, 72, Machado, Salvador/BA, CEP 40.455-070. Nosso compromisso é com a integridade e a segurança dos dados pessoais dos nossos usuários e clientes.
+Bem-vindo à VLUMA, operada por Simone Queiroz Dórea, inscrita no CNPJ 33.242.353/0001-57, com sede na R. Americano da Costa, 72, Machado, Salvador/BA, CEP 40.455-070. Nosso compromisso é com a integridade e a segurança dos dados pessoais dos nossos usuários e clientes.
 
 Esta Política de Privacidade aplica-se a todas as interações digitais realizadas em nosso site plugadoapp.com.br, serviços associados, aplicativos móveis e outras plataformas digitais sob nosso controle.
 
