@@ -166,8 +166,8 @@ export default function Cadastro() {
         {/* Content */}
         <div className="text-center max-w-md">
           {/* Large Logo */}
-          <div className="mb-8 flex justify-center">
-            <svg width="96" height="96" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <div className="mb-6 flex justify-center">
+            <svg width="72" height="72" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <linearGradient id="ringGradCadastro" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" stopColor="#F5A623"/>
@@ -192,17 +192,17 @@ export default function Cadastro() {
             backgroundClip: 'text',
             letterSpacing: '0.1em',
             fontWeight: 800,
-            fontSize: '3rem',
-            marginBottom: '1rem'
+            fontSize: '2.2rem',
+            marginBottom: '0.75rem'
           }}>
             PLUGADO
           </h1>
 
-          <p className="text-gray-300 text-lg mb-8" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+          <p className="text-gray-300 text-sm mb-6" style={{ fontFamily: 'DM Sans, sans-serif' }}>
             Seu negócio sempre ligado
           </p>
 
-          <div className="space-y-4 text-left">
+          <div className="space-y-3 text-left">
             <div className="flex items-start gap-3">
               <div className="w-8 h-8 rounded-full bg-[#F5A623]/20 flex items-center justify-center flex-shrink-0 mt-1">
                 <svg className="w-4 h-4 text-[#F5A623]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -320,11 +320,13 @@ export default function Cadastro() {
           </div>
 
           {/* Error Message */}
-          {error && (
-            <div className="bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-lg text-sm mb-6">
-              {error}
-            </div>
-          )}
+          <div className="min-h-[44px] mb-2">
+            {error && (
+              <div className="bg-red-500/10 border border-red-500/20 text-red-400 px-3 py-2 rounded-lg text-sm">
+                {error}
+              </div>
+            )}
+          </div>
 
           {/* Step 1: Access Data */}
           {step === 1 && (
@@ -513,7 +515,7 @@ export default function Cadastro() {
 
           {/* Step 3: Legal Data */}
           {step === 3 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div>
                 <label className="block text-gray-300 text-sm mb-2">Tipo de documento</label>
                 <div className="flex gap-4">
@@ -548,7 +550,7 @@ export default function Cadastro() {
                   type="text"
                   value={form.numeroDocumento}
                   onChange={(e) => handleInputChange('numeroDocumento', e.target.value)}
-                  className="w-full px-4 py-3 bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all"
+                  className="w-full px-4 py-2 bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all"
                   placeholder={form.tipoDocumento === 'cpf' ? '000.000.000-00' : '00.000.000/0000-00'}
                 />
               </div>
@@ -561,7 +563,7 @@ export default function Cadastro() {
                   type="text"
                   value={form.nomeResponsavel}
                   onChange={(e) => handleInputChange('nomeResponsavel', e.target.value)}
-                  className="w-full px-4 py-3 bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all"
+                  className="w-full px-4 py-2 bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all"
                   placeholder={form.tipoDocumento === 'cpf' ? 'Seu nome completo' : 'Razão Social da empresa'}
                 />
               </div>
@@ -572,7 +574,7 @@ export default function Cadastro() {
                   type="text"
                   value={form.endereco}
                   onChange={(e) => handleInputChange('endereco', e.target.value)}
-                  className="w-full px-4 py-3 bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all"
+                  className="w-full px-4 py-2 bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all"
                   placeholder="Rua, número, bairro, cidade"
                 />
               </div>
@@ -583,7 +585,7 @@ export default function Cadastro() {
                   type="email"
                   value={form.emailLgpd}
                   onChange={(e) => handleInputChange('emailLgpd', e.target.value)}
-                  className="w-full px-4 py-3 bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all"
+                  className="w-full px-4 py-2 bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all"
                   placeholder="lgpd@empresa.com"
                 />
               </div>
@@ -594,7 +596,7 @@ export default function Cadastro() {
                   type="text"
                   value={form.telefone}
                   onChange={(e) => handleInputChange('telefone', e.target.value)}
-                  className="w-full px-4 py-3 bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all"
+                  className="w-full px-4 py-2 bg-[#0B1520] border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623] focus:border-transparent transition-all"
                   placeholder="(00) 00000-0000"
                 />
               </div>
@@ -621,12 +623,14 @@ export default function Cadastro() {
           )}
 
           {/* Sign In Link */}
-          <p className="text-center text-gray-400 text-sm mt-6">
-            Já tem conta?{' '}
-            <Link to="/login" className="text-[#F5A623] hover:text-[#E8951C] font-medium transition-colors">
-              Entre
-            </Link>
-          </p>
+          {step !== 3 && (
+            <p className="text-center text-gray-400 text-sm mt-6">
+              Já tem conta?{' '}
+              <Link to="/login" className="text-[#F5A623] hover:text-[#E8951C] font-medium transition-colors">
+                Entre
+              </Link>
+            </p>
+          )}
         </div>
 
         {/* Footer */}
