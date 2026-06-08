@@ -91,17 +91,16 @@ export default function Cadastro() {
 
   const handleAceitar = async () => {
     setShowModal(false)
-    setLoading(true)
-    try {
+        try {
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: form.email,
         password: form.senha,
         options: { data: { nome: form.nome } }
       })
-      if (authError) { setError(authError.message); setLoading(false); return }
+      if (authError) { setError(authError.message); return }
 
       const userId = authData.user?.id
-      if (!userId) { setError('Erro ao criar usuário.'); setLoading(false); return }
+      if (!userId) { setError('Erro ao criar usuário.'); return }
 
       const { error: lojaError } = await supabase.from('lojas').insert({
         user_id: userId,
@@ -115,7 +114,7 @@ export default function Cadastro() {
         email_lgpd: form.emailLgpd,
         telefone: form.telefone.replace(/\D/g, '')
       })
-      if (lojaError) { setError('Erro ao salvar dados da loja.'); setLoading(false); return }
+      if (lojaError) { setError('Erro ao salvar dados da loja.'); return }
 
       await supabase.from('aceites_termos').insert({
         user_id: userId,
@@ -124,7 +123,7 @@ export default function Cadastro() {
       })
 
       window.location.href = '/dashboard'
-    } catch { setError('Erro inesperado. Tente novamente.'); setLoading(false) }
+    } catch { setError('Erro inesperado. Tente novamente.') }
   }
 
   const Logo = ({ size = 56 }: { size?: number }) => (
