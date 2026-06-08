@@ -54,6 +54,36 @@ export default function Cadastro() {
 
   const isEmailValido = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 
+  const isCPFValido = (cpf: string) => {
+    const c = cpf.replace(/\D/g, '')
+    if (c.length !== 11 || /^(\d)\1+$/.test(c)) return false
+    let sum = 0
+    for (let i = 0; i < 9; i++) sum += parseInt(c[i]) * (10 - i)
+    let r = (sum * 10) % 11
+    if (r === 10 || r === 11) r = 0
+    if (r !== parseInt(c[9])) return false
+    sum = 0
+    for (let i = 0; i < 10; i++) sum += parseInt(c[i]) * (11 - i)
+    r = (sum * 10) % 11
+    if (r === 10 || r === 11) r = 0
+    return r === parseInt(c[10])
+  }
+
+  const isCNPJValido = (cnpj: string) => {
+    const c = cnpj.replace(/\D/g, '')
+    if (c.length !== 14 || /^(\d)\1+$/.test(c)) return false
+    const calc = (c: string, n: number) => {
+      let sum = 0
+      let pos = n - 7
+      for (let i = n; i >= 1; i--) {
+        sum += parseInt(c[n - i]) * pos--
+        if (pos < 2) pos = 9
+      }
+      return sum % 11 < 2 ? 0 : 11 - (sum % 11)
+    }
+    return calc(c, 12) === parseInt(c[12]) && calc(c, 13) === parseInt(c[13])
+  }
+
   const validateStep1 = () => {
     if (!form.nome || !form.email || !form.senha || !form.confirmarSenha) { setError('Todos os campos são obrigatórios.'); return false }
     if (!isEmailValido(form.email)) { setError('E-mail inválido.'); return false }
@@ -71,8 +101,8 @@ export default function Cadastro() {
 
   const validateStep3 = () => {
     if (!form.numeroDocumento || !form.nomeResponsavel) { setError('Documento e nome são obrigatórios.'); return false }
-    if (form.tipoDocumento === 'cpf' && form.numeroDocumento.replace(/\D/g,'').length !== 11) { setError('CPF inválido.'); return false }
-    if (form.tipoDocumento === 'cnpj' && form.numeroDocumento.replace(/\D/g,'').length !== 14) { setError('CNPJ inválido.'); return false }
+    if (form.tipoDocumento === 'cpf' && !isCPFValido(form.numeroDocumento)) { setError('CPF inválido.'); return false }
+    if (form.tipoDocumento === 'cnpj' && !isCNPJValido(form.numeroDocumento)) { setError('CNPJ inválido.'); return false }
     if (form.emailLgpd && !isEmailValido(form.emailLgpd)) { setError('E-mail LGPD inválido.'); return false }
     if (form.telefone && form.telefone.replace(/\D/g,'').length < 10) { setError('Telefone inválido.'); return false }
     setError(''); return true
