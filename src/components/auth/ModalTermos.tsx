@@ -146,12 +146,27 @@ export default function ModalTermos({ onAceitar, onFechar }: ModalTermosProps) {
   const handleScroll = () => {
     const el = scrollRef.current
     if (!el) return
+    // Só marca como lido se o conteúdo realmente tem scroll e chegou ao final
+    const temScroll = el.scrollHeight > el.clientHeight + 20
     const chegouFinal = el.scrollHeight - el.scrollTop <= el.clientHeight + 10
-    if (chegouFinal) {
+    if (temScroll && chegouFinal) {
       if (aba === 'termos') setTermosLido(true)
       if (aba === 'politica') setPoliticaLida(true)
     }
   }
+
+  // Verificar ao trocar de aba se o conteúdo tem scroll
+  useEffect(() => {
+    const el = scrollRef.current
+    if (!el) return
+    setTimeout(() => {
+      const temScroll = el.scrollHeight > el.clientHeight + 20
+      if (!temScroll) {
+        if (aba === 'termos') setTermosLido(true)
+        if (aba === 'politica') setPoliticaLida(true)
+      }
+    }, 300)
+  }, [aba])
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ backgroundColor: 'rgba(0,0,0,0.8)' }}>
