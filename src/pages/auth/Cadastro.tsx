@@ -124,7 +124,10 @@ export default function Cadastro() {
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: form.email,
         password: form.senha,
-        options: { data: { nome: form.nome } }
+        options: {
+          data: { nome: form.nome },
+          emailRedirectTo: 'https://dev.plugadoapp.com.br/auth/callback'
+        }
       })
       if (authError) { setError(authError.message); setCadastroRealizado(false); return }
       const userId = authData.user?.id
