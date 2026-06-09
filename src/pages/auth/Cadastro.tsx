@@ -11,7 +11,6 @@ export default function Cadastro() {
   const [slugValidando, setSlugValidando] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [cadastroRealizado, setCadastroRealizado] = useState(false)
-  const [cadastroRealizado, setCadastroRealizado] = useState(false)
   
   const [form, setForm] = useState({
     nome: '', email: '', senha: '', confirmarSenha: '',
