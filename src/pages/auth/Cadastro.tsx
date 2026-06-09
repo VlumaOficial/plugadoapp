@@ -10,7 +10,7 @@ export default function Cadastro() {
   const [slugDisponivel, setSlugDisponivel] = useState<boolean | null>(null)
   const [slugValidando, setSlugValidando] = useState(false)
   const [showModal, setShowModal] = useState(false)
-  const [processando, setProcessando] = useState(false)
+  const [cadastroRealizado, setCadastroRealizado] = useState(false)
   
   const [form, setForm] = useState({
     nome: '', email: '', senha: '', confirmarSenha: '',
@@ -151,7 +151,7 @@ export default function Cadastro() {
       if (fnError) { setError('Erro ao salvar dados da loja.'); return }
 
       window.location.href = '/cadastro-confirmacao'
-    } catch { setError('Erro inesperado. Tente novamente.'); setProcessando(false) }
+    } catch { setError('Erro inesperado. Tente novamente.'); setCadastroRealizado(false) }
   }
 
   const Logo = ({ size = 56 }: { size?: number }) => (
@@ -338,7 +338,7 @@ export default function Cadastro() {
               </div>
               <div className="col-span-2 flex gap-3">
                 <button type="button" onClick={handleBack} className="flex-1 py-2.5 text-white font-semibold rounded-full text-sm hover:opacity-90 transition-all" style={{ background:'linear-gradient(135deg,#374151,#1F2937)' }}>← Voltar</button>
-                <button type="button" onClick={handleCreateAccount} disabled={processando} className="flex-1 py-2.5 text-white font-semibold rounded-full text-sm hover:opacity-90 transition-all disabled:opacity-50" style={{ background:'linear-gradient(135deg,#F5A623,#E8951C)' }}>{processando ? 'Processando...' : 'Criar conta'}</button>
+                <button type="button" onClick={handleCreateAccount} disabled={cadastroRealizado} className="flex-1 py-2.5 text-white font-semibold rounded-full text-sm hover:opacity-90 transition-all disabled:opacity-50" style={{ background:'linear-gradient(135deg,#F5A623,#E8951C)' }}>{cadastroRealizado ? 'Processando...' : 'Criar conta'}</button>
               </div>
             </div>
           )}
