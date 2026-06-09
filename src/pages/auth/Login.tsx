@@ -238,6 +238,13 @@ export default function Login() {
             </button>
           </form>
 
+          {/* Esqueci senha */}
+          <div className="text-right">
+            <Link to="/esqueci-senha" className="text-gray-400 hover:text-[#F5A623] text-xs transition-colors">
+              Esqueci minha senha
+            </Link>
+          </div>
+
           {/* Sign Up Link */}
           <p className="text-center text-gray-400 text-sm mt-6">
             Não tem conta?{' '}
