@@ -13,16 +13,31 @@ export default function Login() {
   const [searchParams] = useSearchParams()
 
   useEffect(() => {
-    // Detectar confirmação de e-mail via hash ou query params
+    // Detectar confirmação via hash fragment do Supabase
     const hash = window.location.hash
-    if (hash.includes('type=signup') || hash.includes('type=email_change')) {
+    if (hash && hash.includes('type=signup')) {
       setSucesso('E-mail confirmado com sucesso! Faça login para acessar sua conta.')
     }
-    // Verificar se veio de confirmação pelo Supabase
+
+    // Detectar via onAuthStateChange
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === 'SIGNED_IN') {
+        const hash = window.location.hash
+        if (hash && hash.includes('type=signup')) {
+          setSucesso('E-mail confirmado com sucesso! Faça login para acessar sua conta.')
+        }
+      }
+      if (event === 'USER_UPDATED') {
+        setSucesso('E-mail confirmado com sucesso! Faça login para acessar sua conta.')
+      }
+    })
+
     const errorDescription = searchParams.get('error_description')
     if (errorDescription) {
       setError(errorDescription)
     }
+
+    return () => subscription.unsubscribe()
   }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
