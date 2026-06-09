@@ -8,7 +8,7 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const [sucesso, setSucesso] = useState('')
+  const [sucesso, setSucesso] = useState<string>('')
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
 
@@ -253,7 +253,13 @@ export default function Login() {
             </button>
           </form>
 
-          {/* Esqueci senha */}
+          {sucesso && (
+          <div className="bg-green-500/10 border border-green-500/20 text-green-400 px-4 py-3 rounded-lg text-sm mb-4">
+            ✅ {sucesso}
+          </div>
+        )}
+
+        {/* Esqueci senha */}
           <div className="text-right">
             <Link to="/esqueci-senha" className="text-gray-400 hover:text-[#F5A623] text-xs transition-colors">
               Esqueci minha senha
