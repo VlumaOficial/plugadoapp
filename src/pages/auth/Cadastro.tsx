@@ -10,6 +10,7 @@ export default function Cadastro() {
   const [slugDisponivel, setSlugDisponivel] = useState<boolean | null>(null)
   const [slugValidando, setSlugValidando] = useState(false)
   const [showModal, setShowModal] = useState(false)
+  const [processando, setProcessando] = useState(false)
   
   const [form, setForm] = useState({
     nome: '', email: '', senha: '', confirmarSenha: '',
@@ -150,7 +151,7 @@ export default function Cadastro() {
       if (fnError) { setError('Erro ao salvar dados da loja.'); return }
 
       window.location.href = '/cadastro-confirmacao'
-    } catch { setError('Erro inesperado. Tente novamente.') }
+    } catch { setError('Erro inesperado. Tente novamente.'); setProcessando(false) }
   }
 
   const Logo = ({ size = 56 }: { size?: number }) => (
