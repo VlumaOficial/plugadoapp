@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { supabase } from '../../integrations/supabase/client'
 
 export default function Login() {
@@ -8,7 +8,22 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [sucesso, setSucesso] = useState('')
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+
+  useEffect(() => {
+    // Detectar confirmação de e-mail via hash ou query params
+    const hash = window.location.hash
+    if (hash.includes('type=signup') || hash.includes('type=email_change')) {
+      setSucesso('E-mail confirmado com sucesso! Faça login para acessar sua conta.')
+    }
+    // Verificar se veio de confirmação pelo Supabase
+    const errorDescription = searchParams.get('error_description')
+    if (errorDescription) {
+      setError(errorDescription)
+    }
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
