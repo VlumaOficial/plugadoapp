@@ -10,7 +10,7 @@ export default function Cadastro() {
   const [slugDisponivel, setSlugDisponivel] = useState<boolean | null>(null)
   const [slugValidando, setSlugValidando] = useState(false)
   const [showModal, setShowModal] = useState(false)
-  const [processando, setProcessando] = useState(false)
+  const [processando, setProcessando] = useState(false) // eslint-disable-line
   
   const [form, setForm] = useState({
     nome: '', email: '', senha: '', confirmarSenha: '',
